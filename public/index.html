@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Analyzer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="container">
+        <header class="hero">
+            <div class="badge">AI POWERED</div>
+            <h1>AI Resume Analyzer <span>🤖</span></h1>
+            <p>Get an instant, practical review of your resume using Google Gemini AI.</p>
+        </header>
+
+        <section class="upload-card">
+            <label class="file-label" for="resume">Choose your PDF resume</label>
+            <input type="file" id="resume" accept=".pdf,application/pdf">
+            <div id="fileName" class="file-name">No file selected</div>
+            <button id="analyzeBtn" onclick="analyzeResume()">Analyze Resume</button>
+            <div id="loading" class="loading" aria-live="polite"></div>
+        </section>
+
+        <section id="dashboard" class="dashboard hidden">
+            <div class="score-card">
+                <div class="score-ring"><span id="score">--</span><small>/100</small></div>
+                <div>
+                    <h2>Resume Score</h2>
+                    <p id="scoreReason"></p>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h2>Candidate Summary</h2>
+                <p id="candidateSummary"></p>
+            </div>
+
+            <div class="grid">
+                <div class="panel">
+                    <h2>🛠️ Skills Identified</h2>
+                    <div id="skills"></div>
+                </div>
+                <div class="panel">
+                    <h2>💪 Strengths</h2>
+                    <ul id="strengths"></ul>
+                </div>
+                <div class="panel">
+                    <h2>🎯 Skill Gaps</h2>
+                    <ul id="missingSkills"></ul>
+                </div>
+                <div class="panel">
+                    <h2>📝 Improvements</h2>
+                    <ul id="improvements"></ul>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h2>💼 Recommended Roles</h2>
+                <div id="roles" class="chips"></div>
+            </div>
+
+            <div class="panel">
+                <h2>🎤 Interview Questions</h2>
+                <div id="questions"></div>
+            </div>
+        </section>
+
+        <div id="error" class="error hidden"></div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
