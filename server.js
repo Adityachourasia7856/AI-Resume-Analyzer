@@ -1,4 +1,9 @@
 require("dotenv").config();
+const OpenAI = require("openai");
+const groq = new OpenAI({
+    apiKey:process.env.GROQ_API_KEY,
+    baseURL:"https://api.groq.com/openai/v1"
+})
 
 const express = require("express");
 const multer = require("multer");
@@ -12,7 +17,7 @@ const upload = multer({
     limits: { fileSize: 5 * 1024 * 1024 }
 });
 
-const MODEL = process.env.GEMINI_MODEL || "gemini-3.6-flash";
+const MODEL = process.env.GROQ_MODEL || "openai/gpt-oss-120b";
 
 function cleanJsonText(text) {
     return text
@@ -78,41 +83,24 @@ Resume:
 ${resumeText}
 `;
 
-        const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "x-goog-api-key": process.env.GEMINI_API_KEY
-                },
-                body: JSON.stringify({
-                    contents: [{ parts: [{ text: prompt }] }],
-                    generationConfig: {
-                        temperature: 0.3,
-                        responseMimeType: "application/json"
-                    }
-                })
-            }
-        );
-
-        if (!response.ok) {
-            const errorData = await response.text();
-            console.error("Gemini API Error:", errorData);
-            return res.status(response.status).json({
-                error: "Gemini API request failed.",
-                details: errorData
-            });
+        const completion = await groq.chat.completions.create({
+    model: MODEL,
+    messages: [
+        {
+            role: "user",
+            content: prompt
         }
+    ],
+    temperature: 0.3
+});
 
-        const result = await response.json();
-        const rawAnalysis = result.candidates?.[0]?.content?.parts
-            ?.map(part => part.text || "")
-            .join("") || "";
+const rawAnalysis = completion.choices[0]?.message?.content || "";
 
-        if (!rawAnalysis) {
-            return res.status(500).json({ error: "Gemini returned no analysis." });
-        }
+if (!rawAnalysis) {
+    return res.status(500).json({
+        error: "Groq returned no analysis."
+    });
+}
 
         let analysis;
         try {

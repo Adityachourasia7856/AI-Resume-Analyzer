@@ -6,15 +6,19 @@
     "start": "node server.js",
     "test": "echo \"No tests configured\""
   },
-  "keywords": ["resume", "gemini", "ai"],
+  "keywords": [
+    "resume",
+    "groq",
+    "ai"
+  ],
   "author": "",
   "license": "ISC",
-  "description": "AI-powered resume analyzer using Google Gemini",
+  "description": "AI-powered resume analyzer using Groq",
   "dependencies": {
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "multer": "^2.4.0",
-    "openai": "^7.17.0",
+    "openai": "^7.47.0",
     "pdf-parse": "^1.1.1"
   }
 }
