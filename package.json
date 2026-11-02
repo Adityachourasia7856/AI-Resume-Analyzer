@@ -6,10 +6,17 @@
     "start": "node server.js",
     "test": "echo \"No tests configured\""
   },
+<<<<<<< HEAD
   "keywords": ["resume", "gemini", "ai"],
   "author": "",
   "license": "ISC",
   "description": "AI-powered resume analyzer using Google Gemini",
+=======
+  "keywords": ["resume", "groq", "ai"],
+  "author": "",
+  "license": "ISC",
+  "description": "AI-powered resume analyzer using Groq",
+>>>>>>> eeefe0b (Integrate Groq API)
   "dependencies": {
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
